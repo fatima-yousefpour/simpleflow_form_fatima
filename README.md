@@ -14,6 +14,7 @@ ________________________________________________________________________________
  تب‌ها: جایگاه Sign-Up / Sign-In برای توسعه‌های آینده.
 ___________________________________________________________________________________________________________________________________________________________________
  // اعتبارسنجی رمز عبور
+ ```javascript
 function validatePassword() {
   const value = password.value;
   const lengthValid = value.length >= 8;
@@ -30,6 +31,7 @@ function validatePassword() {
   
   ruleStrength.textContent = `Password Strength: ${strengthValid ? 'Strong' : 'Weak'}`;
 }
+```
 
 
 توضیح:
@@ -37,6 +39,7 @@ function validatePassword() {
 نشانگر قدرت رمز عبور به‌صورت دینامیک بروزرسانی می‌شود.
 ___________________________________________________________________________________________________________________________________________________________________
 // اعتبارسنجی فرم و فعال‌سازی دکمه ثبت
+```javascript
 function validateAll() {
   validateUsername();
   validateEmail();
@@ -60,11 +63,12 @@ function validateAll() {
     submitBtn.disabled = true;
   }
 }
-
+```
 توضیح:
 بررسی می‌کند که تمام فیلدها معتبر باشند و دکمه Create Account را فعال یا غیرفعال می‌کند.
 ___________________________________________________________________________________________________________________________________________________________________
 // نمایش پیام خطا
+```javascript
 function validateUsername() {
   const value = username.value.trim();
   const isValid = value.length >= 3 && value.length <= 15;
@@ -79,11 +83,13 @@ function validateUsername() {
     usernameError.classList.remove("show"); 
   }
 }
+```
 
 توضیح:
 نمایش یا مخفی کردن پیام‌های خطا به‌صورت دینامیک و نمایش وضعیت معتبر یا نامعتبر فیلد ورودی.
 ___________________________________________________________________________________________________________________________________________________________________
 // پیام موفقیت و بازنشانی فرم
+```javascript
 submitBtn.addEventListener("click", () => {
   if(validateAll()){
     successMessage.classList.add("show");
@@ -93,6 +99,7 @@ submitBtn.addEventListener("click", () => {
     submitBtn.disabled = true;
   }
 });
+```
 
 توضیح:
 نمایش پیام موفقیت و بازنشانی تمام فیلدها و وضعیت اعتبارسنجی پس از ایجاد حساب.
