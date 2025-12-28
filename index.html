@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+ 
+  <style>
+    .password-rules li {
+      color: #000000; 
+    }
+
+    .password-rules li::before {
+      color: #9CA3AF; 
+    }
+
+    .password-rules li.valid {
+      color: #16a34a;
+    }
+
+    .password-rules li.valid::before {
+      color: #16a34a;
+    }
+
+    .password-rules li.invalid {
+      color: #DC2626;
+    }
+
+    .password-rules li.invalid::before {
+      color: #DC2626;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Figtree', sans-serif; }
+    body { width: 1440px; height: 1024px; background: #FFFFFF; display: flex; position: relative; margin: 0 auto; }
+
+    .left { width: 676px; height: 960px; position: absolute; top: 32px; left: 32px; border-radius: 20px; overflow: hidden; }
+    .left::before { content: ""; position: absolute; top: 0; left: -166px; width: 842px; height: 960px; background-image: url("https://i.ibb.co/v6HVh9k0/d71a1f0106b82a54e324dce1346501dcbea0e315.jpg"); background-size: cover; background-position: center; z-index: 1; }
+    .left::after { content: ""; position: absolute; top: 0; left: -166px; width: 842px; height: 960px; background: linear-gradient(180deg, rgba(70, 95, 241, 0.37) 0%, #465FF1 100%); z-index: 2; }
+    .left-overlay { position: relative; z-index: 3; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+    .top-text { position: absolute; top: 108px; left: 50%; transform: translateX(-50%); width: 454px; height: 74px; display: flex; flex-direction: column; gap: 0; z-index: 3; text-align: center; }
+    .main-title { font-weight: 900; font-size: 40px; color: #FFFFFF; margin-bottom: 0; }
+    .subtitle { font-weight: 500; font-size: 22px; color: #FFFFFF; opacity: 0.9; }
+    .bottom-text { position: absolute; bottom: 140px; left: 50%; transform: translateX(-50%); width: 454px; display: flex; flex-direction: column; gap: 10px; align-items: center; z-index: 3; }
+    .secondary-title { font-weight: 650; font-size: 40px; text-align: center; color: #FFFFFF; margin: bottom 4px;line-height: 180%; }
+    .bottom-description {
+  font-size: 24px;
+  text-align: center;
+  color: #FFFFFF;
+  opacity: 0.9;
+}
+
+.bottom-description span {
+  display: block;
+}
+
+.bottom-description .line-1 {
+  line-height: 0.5;
+}
+
+.bottom-description .line-2 {
+  margin-top: 10px;
+  line-height: 1;
+}
+
+    .right { width: 358px; position: absolute; top: 154px; left: 900px; display: flex; flex-direction: column; }
+    .logo-right { width: 165px; height: 29px; font-weight: 700; font-size: 24px; color: #26203B; margin-bottom: 32px; display: flex; align-items: center; gap: 12px; }
+    .logo-icon { position: relative; width: 24px; height: 24px; border-radius: 4px; background: #ECF0FF; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .logo-icon-s { position: absolute; width: 31px; height: 61px; top: -32px; left: -16.5px; font-family: 'Figtree', sans-serif; font-weight: 900; font-size: 50.56px; line-height: 100%; color: #465FF180; transform: rotate(180deg); pointer-events: none; }
+    .logo-text { width: 129px; height: 29px; display: flex; align-items: center; color: #26203B; }
+
+    .tabs { display: flex; background: #ECF0FF; border-radius: 8px; margin-bottom: 32px; width: 358px; height: 43px; padding: 4px; gap: 0; overflow: hidden; }
+    .tabs button { flex: 1; height: 35px; border: none; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; border-radius: 8px; }
+    .tabs button.active { background: #465FF1; color: #FFFFFF; font-weight: 500; }
+    .tabs button:not(.active) { background: transparent; color: #9C9AA5; font-weight: 400; }
+
+    .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; position: relative; }
+    label { font-size: 16px; font-weight: 500; color: #26203B; }
+    input { width: 358px; height: 48px; padding: 12px 16px; border-radius: 8px; border: 1px solid #d1d5db; outline: none; font-size: 14px; background: white; transition: 0.3s; }
+    input:focus { border-color: #4f46e5; box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2); }
+    input.error { border-color: #DC2626; box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2); color :#DC2626;}
+    input.valid { border-color: #22c55e; box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2); }
+    input.password-strong { border-color: #22c55e; box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2); }
+
+    .error-message { color: #DC2626; font-size: 11px; margin-top: 4px; display: none; }
+    .error-message.show { display: block; }
+
+    .password-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .forgot-password { font-size: 12px; text-decoration: underline; color: #9C9AA5; background: transparent; cursor: pointer; border: none; }
+
+    .password-rules-container { width: 358px; display: flex; flex-direction: column; gap: 8px; margin-top: 1px; }
+    .password-rules { list-style: none; padding: 0; margin: 0; }
+    .password-rules li { font-size: 12px; margin-bottom: 8px; color:#000000 ; display: flex; align-items: center; padding-left: 24px; position: relative; }
+    .password-rules li::before { content: "✓"; position: absolute; left: 0; font-weight: bold; font-size: 14px; }
+    .password-rules li.valid { color: #16a34a; }
+    #rule-strength { order: -1; margin-bottom: 12px; }
+
+    .submit-btn { width: 358px; height: 48px; border-radius: 8px; border: none; background: rgba(70, 95, 241, 0.7); color: #FFFFFF; cursor: not-allowed; font-weight: 600; font-size: 16px;margin-top: 30px; margin-bottom: 10px; opacity: 1; display: flex; align-items: center; justify-content: center; }
+    .submit-btn.active { background: rgba(70, 95, 241, 1); cursor: pointer; opacity: 1; }
+    .submit-btn.active:hover { background: rgba(58, 80, 210, 1); }
+
+    .success-message { color: #15803D; display: none; font-weight: 600; font-size: 16px; text-align: center; margin-top: 10px; }
+    .success-message.show { display: block; }
+
+    .terms { position: absolute; width: 259px; height: 24px; top: 953px; left: 950px; font-size: 10px; color: #6b7280; text-align: center; }
+    .terms span { font-weight: 500; color: #374151; cursor: pointer; }
+    .terms span:hover { color: #4f46e5; }
+
+    ::placeholder { color: #9ca3af; opacity: 1; }
+  </style>
+</head>
+
+<body>
+
+  <div class="left">
+    <div class="left-overlay">
+      <div class="top-text">
+        <h1 class="main-title">Welcome to SimpleFlow</h1>
+        <p class="subtitle">Your Gateway to Effortless Management.</p>
+      </div>
+     
+      <div class="bottom-text">
+        <h1 class="secondary-title">Seamless Collaboration</h1>
+        <p class="bottom-description">
+  <span class="line-1">Effortlessly work together with your</span>
+  <span class="line-2">team in real-time.</span>
+</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="logo-right">
+      <div class="logo-icon">
+        <div class="logo-icon-s">S</div>
+      </div>
+      <div class="logo-text">SimpleFlow</div>
+    </div>
+
+    <div class="tabs">
+      <button class="active">Sign Up</button>
+      <button>Sign In</button>
+    </div>
+
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Pick a Username">
+      <div class="error-message" id="username-error">Username must be between 3 and 15 characters</div>
+    </div>
+
+    <div class="form-group">
+      <label for="fullname">Full Name</label>
+      <input type="text" id="fullname" placeholder="Enter Your Name">
+      <div class="error-message" id="fullname-error">Please enter your full name</div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter Your Email Address">
+      <div class="error-message" id="email-error">Please enter a valid email address</div>
+    </div>
+
+    <div class="form-group">
+      <div class="password-header">
+        <label for="password" class="password-label">Password</label>
+        <button class="forgot-password" id="forgotPassword">Forgot Password?</button>
+      </div>
+      <input type="password" id="password" placeholder="Enter Password">
+     
+      <div class="password-rules-container">
+        <ul class="password-rules">
+          <li id="rule-strength">Password Strength: Weak</li>
+          <li id="rule-name">Cannot contain your name or email address</li>
+          <li id="rule-length">At least 8 characters</li>
+          <li id="rule-symbol">Contains a number or symbol</li>
+        </ul>
+      </div>
+    </div>
+
+    <button class="submit-btn" id="submitBtn">Create Account</button>
+    <div class="success-message" id="successMessage">Account Created Successfully!</div>
+  </div>
+
+  <div class="terms">
+    By signing up to create an account I accept Company's
+    <span>Terms of use</span> & <span>Privacy Policy</span>.
+  </div>
+
+  <script>
+    const password = document.getElementById("password");
+    const username = document.getElementById("username");
+    const email = document.getElementById("email");
+    const fullname = document.getElementById("fullname");
+    const submitBtn = document.getElementById("submitBtn");
+    const successMessage = document.getElementById("successMessage");
+
+    const ruleLength = document.getElementById("rule-length");
+    const ruleSymbol = document.getElementById("rule-symbol");
+    const ruleName = document.getElementById("rule-name");
+    const ruleStrength = document.getElementById("rule-strength");
+
+    const usernameError = document.getElementById("username-error");
+    const emailError = document.getElementById("email-error");
+    const fullnameError = document.getElementById("fullname-error");
+
+    let validationStatus = {
+      username: false,
+      fullname: false,
+      email: false,
+      passwordName: false,
+      passwordLength: false,
+      passwordSymbol: false,
+      passwordStrength: false
+    };
+
+    function validateAll() {
+      validateUsername();
+      validateEmail();
+      validateFullname();
+      validatePassword();
+
+      const allConditionsMet =
+        validationStatus.username &&
+        validationStatus.fullname &&
+        validationStatus.email &&
+        validationStatus.passwordName &&
+        validationStatus.passwordLength &&
+        validationStatus.passwordSymbol &&
+        validationStatus.passwordStrength;
+     
+      if (allConditionsMet) {
+        submitBtn.classList.add("active");
+        submitBtn.disabled = false;
+      } else {
+        submitBtn.classList.remove("active");
+        submitBtn.disabled = true;
+      }
+     
+      return allConditionsMet;
+    }
+
+    function validateUsername() {
+      const value = username.value.trim();
+      const isValid = value.length >= 3 && value.length <= 15;
+      validationStatus.username = isValid;
+      username.classList.remove("error", "valid");
+      if (value.length === 0) usernameError.classList.remove("show");
+      else if (!isValid) { username.classList.add("error"); usernameError.classList.add("show"); }
+      else { username.classList.add("valid"); usernameError.classList.remove("show"); }
+      return isValid;
+    }
+
+    function validateFullname() {
+      const value = fullname.value.trim();
+      const isValid = value.length >= 2 && value.includes(' ');
+      validationStatus.fullname = isValid;
+      fullname.classList.remove("error", "valid");
+      if (value.length === 0) fullnameError.classList.remove("show");
+      else if (!isValid) { fullname.classList.add("error"); fullnameError.classList.add("show"); }
+      else { fullname.classList.add("valid"); fullnameError.classList.remove("show"); }
+      return isValid;
+    }
+
+    function validateEmail() {
+      const value = email.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const isValid = emailRegex.test(value);
+      validationStatus.email = isValid;
+      email.classList.remove("error", "valid");
+      if (value.length === 0) emailError.classList.remove("show");
+      else if (!isValid) { email.classList.add("error"); emailError.classList.add("show"); }
+      else { email.classList.add("valid"); emailError.classList.remove("show"); }
+      return isValid;
+    }
+
+    function validatePassword() {
+      const value = password.value;
+      password.classList.remove("error", "valid", "password-strong");
+
+      const lengthValid = value.length >= 8;
+      validationStatus.passwordLength = lengthValid;
+      toggle(ruleLength, lengthValid);
+
+      const symbolValid = /[0-9!@#$%^&*]/.test(value);
+      validationStatus.passwordSymbol = symbolValid;
+      toggle(ruleSymbol, symbolValid);
+
+      const usernamePart = username.value.trim();
+      const emailPart = email.value.split('@')[0];
+      const fullnamePart = fullname.value.trim().split(' ')[0];
+      const forbidden = [usernamePart, emailPart, fullnamePart].filter(Boolean);
+      const containsForbidden = forbidden.some(word => word && value.toLowerCase().includes(word.toLowerCase()));
+      const nameValid = !containsForbidden && value.length > 0;
+      validationStatus.passwordName = nameValid;
+      toggle(ruleName, nameValid);
+
+      const strengthValid = nameValid && lengthValid && symbolValid && value.length > 0;
+      validationStatus.passwordStrength = strengthValid;
+
+      let strengthText = "Weak";
+      if (strengthValid) { strengthText = "Strong"; password.classList.add("password-strong"); }
+      else if (value.length > 0 && (lengthValid || symbolValid || nameValid)) { strengthText = "Medium"; }
+
+      ruleStrength.textContent = `Password Strength: ${strengthText}`;
+      ruleStrength.classList.toggle("valid", strengthValid);
+      ruleStrength.classList.remove("valid", "invalid");
+
+      if (password.value.length > 0) {
+        ruleStrength.classList.add(
+          validationStatus.passwordStrength ? "valid" : "invalid"
+        );
+      }
+
+    }
+
+    function toggle(element, valid) {
+      element.classList.remove("valid", "invalid");
+
+      element.style.color = "";
+     
+      if (password.value.length === 0) return;
+
+      if (valid) {
+        element.classList.add("valid");
+      } else {
+        element.classList.add("invalid");
+      }
+    }
+
+
+    function resetBlackRulesOnInput() {
+      [ruleLength, ruleSymbol, ruleName, ruleStrength].forEach(rule => {
+        rule.style.color = ""; 
+      });
+    }
+
+    [password, username, email, fullname].forEach(input => {
+      input.addEventListener("input", () => {
+        resetBlackRulesOnInput();
+        validateAll();
+      });
+    });
+
+    submitBtn.addEventListener("click", () => {
+      if(validateAll()){
+        successMessage.classList.add("show");
+
+        [username, fullname, email, password].forEach(input => input.value = "");
+
+        [username, fullname, email, password].forEach(input => input.classList.remove("valid", "error", "password-strong"));
+
+        usernameError.classList.remove("show");
+        fullnameError.classList.remove("show");
+        emailError.classList.remove("show");
+
+        [ruleLength, ruleSymbol, ruleName, ruleStrength].forEach(rule => {
+          rule.classList.remove("valid");
+          rule.style.color = "#000000";
+        });
+        ruleStrength.textContent = "Password Strength: Weak";
+
+        validationStatus = {
+          username: false,
+          fullname: false,
+          email: false,
+          passwordName: false,
+          passwordLength: false,
+          passwordSymbol: false,
+          passwordStrength: false
+        };
+
+        submitBtn.classList.remove("active");
+        submitBtn.disabled = true;
+      }
+    });
+
+    validateAll(); 
+  </script>
+</body>
+</html>
+
